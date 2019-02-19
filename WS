@@ -1,0 +1,63 @@
+DMA(distributed media application)      required    signaling, call control, bridge virtualization
+RMX(collaboration server)               required    MCU(multi-point control unit), bridge, for hosting conferences
+RM(resource manager)                    optional    provisioning and managing endpoints
+Access Director solution                optional    NAT/firewall traversal
+platform director                       optional    Licensing and monitoring component instances
+RSS recording and streaming server      optional    media recording
+
+WSP(Web Suite Services Portal): SMTP(access meetings using SIP, H.323, integrated services digital network(ISDN), tunneling, public switched telephone network(PSTN))
+    create and initiate online video conference meetings.
+    scheduling a meeting in the realpresence web suite services portal requires user or administrator account access
+    login   ->      select the type of meeting      ->      set meeting parameters and enter a list of participants to invite\
+    In admin interface of WSP, administrators can create and manage users and configure many aspects of the RealPresence Web Suite system
+    
+MEA(Web Suite Experience Portal):
+    users attend meetings and interact with features such as content sharing and group chat.
+
+standards connector server:   
+    transcode of the HTML5 data distributed by MEA into H.264 video streams signaled through session initiation protocol and binary floor control protocol(BFCP) and distributed by an MCU.
+    this makes it possible to share content between HTML5 clients and standards-based clients.
+    
+client application:
+    for non-webrtc conferences and browsers, MFW plug-in that enables SIP
+    webrtc-capable browser use webrtc to initiate or join a conference, MEA provides javascript and html5 that establishes the RTP session, no plug-in is needed.
+    
+users:
+    1.add users to WSP locally
+    2.integrate with an enterprise lightweight directory access protocol server, with LDAP integration enabled, enterprise users can use their domain network credentials to schedule and start meetings in the WSP and attend meetings in MEA.
+
+meeting:
+    WSP contains SMTP server that sends the email notifications to each invited participant,
+    the invitation includes a URL link to the meeting and can include information for how to access meetings using SIP, H.323, Integrated Services Digital Network(IDSN), tunneling, or public switched telephone network(PSTN)
+    
+    WSP contacts the DMA to create a VMR using the configured conference template. the audio and video communication portions of most meetings are hosted on and facilitated by a MCU, or bridge.
+    
+    webrtc mesh mode is enabled, the audio and video media are exchanged directly between the clients without using any MCU resources.
+    
+    a bridge-based meeting takes place, DMA validates VMR and routes the call to a RealPresence Collaboration Server MCU so that participants can exchange audio and video.
+    
+    an ad hoc meeting, users are transferred to an MEA session and prompted to begin inviting participants.
+    
+SIP call to MCU:
+
+            MEA     ---         HTTP rev-proxy      ---         web client
+
+            |
+            | REST
+            |
+                                                    SIP
+            DMA     ---         SBC                 ---         JSLib
+            |                                       ---         MFW plugin
+            | SIP/H323                              RTP
+            |                    
+                                |              
+           MCU                --| RTP
+    
+    
+    
+    
+    
+    
+    
+    
+    
